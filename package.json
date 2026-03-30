@@ -2,7 +2,7 @@
   "name": "bizula",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "npm@9.8.1",
+  "packageManager": "npm@10.9.2",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
