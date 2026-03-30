@@ -4,9 +4,24 @@ import User from '@/models/User';
 import Sale from '@/models/Sale';
 
 function verifySubscription(user: any) {
-  if (!user.isSubscribed) return false;
-  if (!user.subscriptionExpiry) return false;
-  return new Date(user.subscriptionExpiry) > new Date();
+  const now = new Date();
+  const expiry = new Date(user.subscriptionExpiry);
+
+  // If user has never paid and it's been more than 7 days since signup, block
+  if (!user.hasUsedInitialOffer && user.createdAt) {
+    const daysSinceSignup = (now.getTime() - user.createdAt.getTime()) / (1000 * 60 * 60 * 24);
+    if (daysSinceSignup > 7) {
+      return false;
+    }
+  }
+
+  // If user has paid, check if subscription is still active
+  if (user.hasUsedInitialOffer) {
+    return expiry > now;
+  }
+
+  // During free trial
+  return true;
 }
 
 export async function GET(request: NextRequest) {

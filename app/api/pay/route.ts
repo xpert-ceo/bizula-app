@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({
         email: user.email,
-        amount: 100000,
+        amount: 200000,
         callback_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/verify`
       })
     });

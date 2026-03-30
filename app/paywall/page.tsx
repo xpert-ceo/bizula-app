@@ -42,15 +42,15 @@ export default function PaywallPage() {
       <Navbar authenticated={true} />
       <main className="mx-auto flex max-w-md flex-col items-center justify-center p-6">
         <h1 className="text-3xl font-bold">Unlock Bizula</h1>
-        <p className="mt-4 text-center text-lg">Pay ₦1,000 to access Bizula</p>
-        <p className="mt-2 text-center text-sm text-slate-500">First payment gives 60 days. Renewals give 30 days.</p>
+        <p className="mt-4 text-center text-lg">Pay ₦2,000 to continue using Bizula</p>
+        <p className="mt-2 text-center text-sm text-slate-500">Your 7-day free trial has ended. Pay ₦2,000 for 30 days of access.</p>
         {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
         <button
           onClick={handlePay}
           className="mt-6 w-full rounded-lg bg-brand py-3 text-white shadow-lg transition hover:bg-blue-500"
           disabled={loading}
         >
-          {loading ? 'Processing...' : 'Pay ₦1,000 Now'}
+          {loading ? 'Processing...' : 'Pay ₦2,000 Now'}
         </button>
       </main>
     </div>

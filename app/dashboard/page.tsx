@@ -26,9 +26,27 @@ export default function DashboardPage() {
   });
   const [adding, setAdding] = useState(false);
 
+  const [subscriptionStatus, setSubscriptionStatus] = useState<{
+    isInTrial: boolean;
+    daysLeft: number;
+    needsPayment: boolean;
+  }>({ isInTrial: false, daysLeft: 0, needsPayment: false });
+
   useEffect(() => {
     fetchSales();
+    fetchSubscriptionStatus();
   }, []);
+
+  async function fetchSubscriptionStatus() {
+    const res = await fetch('/api/subscription-status');
+    if (res.ok) {
+      const data = await res.json();
+      setSubscriptionStatus(data);
+      if (data.needsPayment) {
+        router.push('/paywall');
+      }
+    }
+  }
 
   async function fetchSales() {
     const res = await fetch('/api/sales');
@@ -99,6 +117,22 @@ export default function DashboardPage() {
       <Navbar authenticated={true} />
       <main className="mx-auto max-w-6xl p-6">
         <h1 className="text-3xl font-bold">Dashboard</h1>
+
+        <div className="mt-4 rounded-lg bg-blue-50 p-4">
+          {subscriptionStatus.isInTrial ? (
+            <p className="text-blue-800">
+              🎉 <strong>Free Trial Active:</strong> {subscriptionStatus.daysLeft} days remaining
+            </p>
+          ) : subscriptionStatus.needsPayment ? (
+            <p className="text-red-800">
+              ⚠️ <strong>Subscription Expired:</strong> Please renew to continue using Bizula
+            </p>
+          ) : (
+            <p className="text-green-800">
+              ✅ <strong>Active Subscription:</strong> {subscriptionStatus.daysLeft} days remaining
+            </p>
+          )}
+        </div>
 
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="rounded-lg bg-slate-50 p-4">

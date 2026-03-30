@@ -23,10 +23,7 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000
 
 Deploy to Vercel with the environment variables set in Vercel dashboard.
 
-## Tech Stack
+## Pricing
 
-- Next.js 14 (App Router)
-- TypeScript
-- Tailwind CSS
-- MongoDB with Mongoose
-- Paystack for payments
+- 7 Days Free Trial
+- Then ₦2,000/month

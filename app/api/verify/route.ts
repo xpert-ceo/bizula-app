@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ message: 'Payment not successful' }, { status: 400 });
     }
 
-    const days = user.hasUsedInitialOffer ? 30 : 60;
+    const days = user.hasUsedInitialOffer ? 30 : 7;
     const baseDate = getBaseDate(user.subscriptionExpiry);
     const newExpiry = new Date(baseDate.getTime() + days * 24 * 60 * 60 * 1000);
 
