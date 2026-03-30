@@ -29,8 +29,7 @@ async function connect() {
   if (!cached.promise) {
     cached.promise = mongoose
       .connect(uri!, {
-        bufferCommands: false,
-        strictQuery: false
+        bufferCommands: false
       })
       .then((mongooseInstance) => mongooseInstance);
   }

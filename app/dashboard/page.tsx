@@ -1,41 +1,6 @@
 'use client';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}  }    return NextResponse.json({ message: 'Password reset failed' }, { status: 500 });    console.error(error);  } catch (error) {    return NextResponse.json({ message: 'Password reset successfully' }, { status: 200 });    await user.save();    user.password = hashedPassword;    const hashedPassword = await hashPassword(newPassword);    }      return NextResponse.json({ message: 'Invalid or expired reset token' }, { status: 400 });    if (!user) {    const user = await User.findOne(); // This is just for demo - you'd find by token    // For now, accept any token (not secure for production)    // In a real app, you'd verify the token from database    await connect();    }      return NextResponse.json({ message: 'Password must be at least 6 characters' }, { status: 400 });    if (newPassword.length < 6) {    }      return NextResponse.json({ message: 'Token and new password are required' }, { status: 400 });    if (!token || !newPassword) {    const { token, newPassword } = await request.json();  try {export async function POST(request: NextRequest) {import { hashPassword } from '@/lib/auth';import User from '@/models/User';import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 
