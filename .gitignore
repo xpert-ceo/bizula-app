@@ -13,3 +13,4 @@ yarn-error.log*
 .pnpm-debug.log*
 coverage/
 **/*.log
+package-lock.json
