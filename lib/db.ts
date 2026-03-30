@@ -28,7 +28,7 @@ async function connect() {
 
   if (!cached.promise) {
     cached.promise = mongoose
-      .connect(uri, {
+      .connect(uri!, {
         bufferCommands: false,
         strictQuery: false
       })

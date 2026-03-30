@@ -47,6 +47,12 @@ export async function GET(request: NextRequest) {
     const baseDate = getBaseDate(user.subscriptionExpiry);
     const newExpiry = new Date(baseDate.getTime() + days * 24 * 60 * 60 * 1000);
 
+    // Apply referral credits if available
+    if (user.referralCredits > 0) {
+      newExpiry.setTime(newExpiry.getTime() + user.referralCredits * 24 * 60 * 60 * 1000);
+      user.referralCredits = 0; // Reset credits after use
+    }
+
     user.subscriptionExpiry = newExpiry;
     user.isSubscribed = true;
     user.hasUsedInitialOffer = true;

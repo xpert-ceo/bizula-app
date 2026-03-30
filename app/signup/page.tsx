@@ -8,6 +8,7 @@ export default function SignupPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [referralCode, setReferralCode] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
@@ -32,7 +33,7 @@ export default function SignupPage() {
     const res = await fetch('/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password, referralCode: referralCode || undefined })
     });
 
     setLoading(false);
@@ -60,6 +61,8 @@ export default function SignupPage() {
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-lg border p-2" />
           <label className="block text-sm font-medium">Password</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full rounded-lg border p-2" />
+          <label className="block text-sm font-medium">Referral Code (Optional)</label>
+          <input type="text" value={referralCode} onChange={(e) => setReferralCode(e.target.value.toUpperCase())} placeholder="Enter referral code" className="w-full rounded-lg border p-2" />
           {error && <p className="text-sm text-red-600">{error}</p>}
           {success && <p className="text-sm text-green-600">{success}</p>}
           <button type="submit" className="w-full rounded-lg bg-brand py-2 text-white" disabled={loading}>

@@ -7,6 +7,9 @@ export interface IUser extends Document {
   subscriptionExpiry: Date;
   hasUsedInitialOffer: boolean;
   createdAt: Date;
+  referralCode: string;
+  referredBy?: mongoose.Types.ObjectId;
+  referralCredits: number; // days of credit earned from referrals
 }
 
 const userSchema = new Schema<IUser>({
@@ -15,7 +18,10 @@ const userSchema = new Schema<IUser>({
   isSubscribed: { type: Boolean, default: false },
   subscriptionExpiry: { type: Date, default: new Date(0) },
   hasUsedInitialOffer: { type: Boolean, default: false },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  referralCode: { type: String, unique: true, sparse: true },
+  referredBy: { type: Schema.Types.ObjectId, ref: 'User' },
+  referralCredits: { type: Number, default: 0 }
 });
 
 const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
