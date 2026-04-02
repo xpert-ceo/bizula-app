@@ -8,14 +8,14 @@ export async function POST(request: NextRequest) {
     const { email, password, referralCode } = await request.json();
 
     if (!email || !password) {
-      return NextResponse.json({ message: 'Email and password are required' }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'Email and password are required' }, { status: 400 });
     }
 
     await connect();
 
     const existing = await User.findOne({ email });
     if (existing) {
-      return NextResponse.json({ message: 'User already exists' }, { status: 409 });
+      return NextResponse.json({ success: false, error: 'User already exists' }, { status: 409 });
     }
 
     const hashedPassword = await hashPassword(password);
@@ -46,9 +46,9 @@ export async function POST(request: NextRequest) {
     const user = new User(userData);
     await user.save();
 
-    return NextResponse.json({ message: 'User created', referralCode: userReferralCode }, { status: 201 });
+    return NextResponse.json({ success: true, data: { message: 'User created', referralCode: userReferralCode } }, { status: 201 });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: 'Signup failed' }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Signup failed' }, { status: 500 });
   }
 }

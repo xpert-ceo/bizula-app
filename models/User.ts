@@ -3,6 +3,7 @@ import mongoose, { Schema, Document, Model } from 'mongoose';
 export interface IUser extends Document {
   email: string;
   password: string;
+  role: string;
   isSubscribed: boolean;
   subscriptionExpiry: Date;
   hasUsedInitialOffer: boolean;
@@ -15,6 +16,7 @@ export interface IUser extends Document {
 const userSchema = new Schema<IUser>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  role: { type: String, default: 'user' },
   isSubscribed: { type: Boolean, default: false },
   subscriptionExpiry: { type: Date, default: new Date(0) },
   hasUsedInitialOffer: { type: Boolean, default: false },

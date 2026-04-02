@@ -119,6 +119,22 @@ export default function DashboardPage() {
   const profitToday = todaySales.reduce((sum, s) => sum + s.profit, 0);
   const totalSales = todaySales.length;
 
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  const weekSalesData = sales.filter(s => new Date(s.createdAt) >= oneWeekAgo);
+  const profitWeek = weekSalesData.reduce((sum, s) => sum + s.profit, 0);
+
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+  const monthSalesData = sales.filter(s => new Date(s.createdAt) >= oneMonthAgo);
+  const profitMonth = monthSalesData.reduce((sum, s) => sum + s.profit, 0);
+
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdaySales = sales.filter(s => new Date(s.createdAt).toDateString() === yesterday.toDateString());
+  const profitYesterday = yesterdaySales.reduce((sum, s) => sum + s.profit, 0);
+  const profitChange = profitToday - profitYesterday;
+
   const bestProduct = sales.reduce((best, s) => {
     const bestProfit = best ? best.profit : 0;
     return s.profit > bestProfit ? s : best;
@@ -150,6 +166,16 @@ export default function DashboardPage() {
           )}
         </div>
 
+        <div className="mt-4 rounded-lg bg-yellow-50 p-4">
+          {totalSales === 0 ? (
+            <p className="text-yellow-800">📝 Start by adding your first sale to see instant insights and reach your first milestone.</p>
+          ) : profitChange < 0 ? (
+            <p className="text-red-800">📉 Profit dropped by ₦{Math.abs(profitChange).toLocaleString()} vs yesterday. Consider reducing ad or cost.</p>
+          ) : (
+            <p className="text-green-800">📈 Great momentum! Profit is up ₦{profitChange.toLocaleString()} vs yesterday.</p>
+          )}
+        </div>
+
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="rounded-lg bg-slate-50 p-4">
             <h3 className="text-lg font-semibold">Revenue Today</h3>
@@ -164,6 +190,29 @@ export default function DashboardPage() {
           <div className="rounded-lg bg-slate-50 p-4">
             <h3 className="text-lg font-semibold">Total Sales</h3>
             <p className="text-2xl font-bold">{totalSales}</p>
+          </div>
+        </div>
+
+        <div className="mt-4 rounded-lg bg-indigo-50 p-4 text-indigo-700">
+          <p className="font-semibold">
+            {todaySales.length === 0 ? 'No sales today yet – add a sale to start tracking profit.' :
+              profitChange < 0 ? `Profit dropped by ₦${Math.abs(profitChange).toLocaleString()} since yesterday. Act now!` :
+              `Profit is up ₦${profitChange.toLocaleString()} vs yesterday. Great momentum!`}
+          </p>
+        </div>
+
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="rounded-lg bg-slate-100 p-4">
+            <h3 className="text-sm font-medium text-gray-600">Profit This Week</h3>
+            <p className="text-xl font-bold text-indigo-700">₦{profitWeek.toLocaleString()}</p>
+          </div>
+          <div className="rounded-lg bg-slate-100 p-4">
+            <h3 className="text-sm font-medium text-gray-600">Profit This Month</h3>
+            <p className="text-xl font-bold text-indigo-700">₦{profitMonth.toLocaleString()}</p>
+          </div>
+          <div className="rounded-lg bg-slate-100 p-4">
+            <h3 className="text-sm font-medium text-gray-600">Best Product</h3>
+            <p className="text-xl font-bold">{bestProduct?.productName ?? 'No records'}</p>
           </div>
         </div>
 
@@ -260,6 +309,13 @@ export default function DashboardPage() {
           >
             Copy Referral Code
           </button>
+        </div>
+
+        <div className="mt-6 rounded-lg bg-slate-100 p-4">
+          <h2 className="text-xl font-semibold">Engagement</h2>
+          <p className="mt-2 text-slate-700">You have a strong daily streak when you add sales consistently.</p>
+          <p className="mt-1 text-lg font-bold">{Math.min(7, totalSales)} day streak</p>
+          <p className="mt-3 text-sm text-slate-500">Milestones: {profitToday >= 10000 ? '₦10k profit achieved ✅' : 'Keep going to hit ₦10k profit'}</p>
         </div>
       </main>
     </div>
