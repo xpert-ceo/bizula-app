@@ -4,9 +4,9 @@ import Sale from '@/models/Sale';
 import { requireAdmin } from '@/lib/admin';
 
 export async function GET(request: NextRequest) {
-  const adminOrResponse = await requireAdmin(request);
-  if (!(adminOrResponse as any)._id) {
-    return adminOrResponse as NextResponse;
+  const result = await requireAdmin(request);
+  if (!('_id' in result)) {
+    return result as NextResponse;
   }
 
   const url = new URL(request.url);
@@ -42,9 +42,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
-  const adminOrResponse = await requireAdmin(request);
-  if (!(adminOrResponse as any)._id) {
-    return adminOrResponse as NextResponse;
+  const result = await requireAdmin(request);
+  if (!('_id' in result)) {
+    return result as NextResponse;
   }
 
   await connect();
@@ -75,9 +75,9 @@ export async function PATCH(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  const adminOrResponse = await requireAdmin(request);
-  if (!(adminOrResponse as any)._id) {
-    return adminOrResponse as NextResponse;
+  const result = await requireAdmin(request);
+  if (!('_id' in result)) {
+    return result as NextResponse;
   }
 
   await connect();

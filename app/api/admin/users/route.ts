@@ -5,9 +5,9 @@ import { requireAdmin } from '@/lib/admin';
 import { hashPassword } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
-  const adminOrResponse = await requireAdmin(request);
-  if (!(adminOrResponse as any)._id) {
-    return adminOrResponse as NextResponse;
+  const result = await requireAdmin(request);
+  if (!('_id' in result)) {
+    return result as NextResponse;
   }
 
   const url = new URL(request.url);
@@ -36,10 +36,36 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({ success: true, data: { users, total, page, limit } });
 }
 
+  const url = new URL(request.url);
+  const page = Math.max(parseInt(url.searchParams.get('page') || '1', 10), 1);
+  const limit = Math.min(Math.max(parseInt(url.searchParams.get('limit') || '10', 10), 1), 50);
+  const search = url.searchParams.get('search') || '';
+
+  await connect();
+
+  const query: any = {};
+  if (search) {
+    query.$or = [
+      { email: new RegExp(search, 'i') },
+      { referralCode: new RegExp(search, 'i') },
+      { role: new RegExp(search, 'i') }
+    ];
+  }
+
+  const total = await User.countDocuments(query);
+  const users = await User.find(query)
+    .select('email role isSubscribed subscriptionExpiry createdAt referralCode referralCredits')
+    .sort({ createdAt: -1 })
+    .skip((page - 1) * limit)
+    .limit(limit);
+
+  return NextResponse.json({ success: true, data: { users, total, page, limit } });
+}
+
 export async function PATCH(request: NextRequest) {
-  const adminOrResponse = await requireAdmin(request);
-  if (!(adminOrResponse as any)._id) {
-    return adminOrResponse as NextResponse;
+  const result = await requireAdmin(request);
+  if (!('_id' in result)) {
+    return result as NextResponse;
   }
 
   await connect();
@@ -73,9 +99,9 @@ export async function PATCH(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  const adminOrResponse = await requireAdmin(request);
-  if (!(adminOrResponse as any)._id) {
-    return adminOrResponse as NextResponse;
+  const result = await requireAdmin(request);
+  if (!('_id' in result)) {
+    return result as NextResponse;
   }
 
   await connect();
