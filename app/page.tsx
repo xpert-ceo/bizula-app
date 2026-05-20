@@ -3,35 +3,67 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import {
+  ArrowUpRight,
+  Bell,
+  CheckCircle2,
+  Sparkles,
+  TrendingUp,
+  Wallet,
+  ShieldCheck,
+  Activity,
+} from 'lucide-react';
 
 const valueCards = [
   {
-    title: 'Instant profit visibility',
-    description: 'See revenue, cost, ad cost, and net profit on every transaction instantly.',
-    icon: 'M6 3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z'
+    title: 'Real-time profit intelligence',
+    description:
+      'Track revenue, cost, ad spend and net profit instantly across every sale.',
+    icon: Wallet,
   },
   {
-    title: 'Data-backed decisions',
-    description: 'Get weekly and monthly trend alerts to stop margin leaks before they happen.',
-    icon: 'M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h2v-2H7v2zm0 4h2v-2H7v2zm0-8h2V7H7v2zm4 4h6v-2h-6v2zm0 4h6v-2h-6v2zm0-8h6V7h-6v2z'
+    title: 'Smart business insights',
+    description:
+      'AI-powered trend alerts help you detect margin leaks before they hurt growth.',
+    icon: TrendingUp,
   },
   {
-    title: 'Sales workflow optimization',
-    description: 'Quick add sale and one-click corrections to maintain cash flow clarity.',
-    icon: 'M7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h10v2H7v-2z'
-  }
+    title: 'Operational clarity',
+    description:
+      'Fast workflows, quick corrections and centralized sales visibility.',
+    icon: Activity,
+  },
 ];
 
 const steps = [
-  { title: '1. Add a sale', detail: 'Quick entry with product, price, cost, quantity and ad spend.' },
-  { title: '2. Track profit instantly', detail: 'Dashboard shows real profit + run rate calculations in seconds.' },
-  { title: '3. Improve margins', detail: 'Get alerts for low profit and manual price/cost targets.' }
+  {
+    title: 'Track a sale',
+    detail:
+      'Add product cost, selling price, quantity and ad spend in seconds.',
+  },
+  {
+    title: 'Monitor profit instantly',
+    detail:
+      'Bizula calculates live net profit and business performance automatically.',
+  },
+  {
+    title: 'Scale with confidence',
+    detail:
+      'Use intelligent alerts and insights to improve margins over time.',
+  },
 ];
 
 function pushAnalytics(eventType: string, payload = {}) {
   if (typeof window !== 'undefined') {
-    window.dispatchEvent(new CustomEvent('bizula-analytics', { detail: { eventType, payload, timestamp: new Date().toISOString() } }));
-    console.log('Analytics event:', eventType, payload);
+    window.dispatchEvent(
+      new CustomEvent('bizula-analytics', {
+        detail: {
+          eventType,
+          payload,
+          timestamp: new Date().toISOString(),
+        },
+      })
+    );
   }
 }
 
@@ -41,150 +73,373 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
+    <div className="min-h-screen overflow-hidden bg-[#f5f7fb] text-slate-900">
       <Navbar authenticated={false} />
 
-      <section className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-16 md:px-8">
-        <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
-          <div>
-            <p className="inline-flex rounded-full bg-indigo-100 px-3 py-1 text-sm font-semibold text-indigo-700">New for 2026: dashboard scorecard & alerts</p>
-            <h1 className="mt-5 text-4xl font-extrabold leading-tight text-slate-900 sm:text-6xl">
-              Stop guessing profit. Start growing sales with clarity.
+      {/* SEO TEXT */}
+      <div className="sr-only">
+        Bizula is a modern African sales and profit tracking software platform
+        for merchants, ecommerce brands, sellers and growing businesses.
+      </div>
+
+      {/* BACKGROUND LIGHTING */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="absolute left-[-10%] top-[10%] h-[420px] w-[420px] rounded-full bg-blue-100/40 blur-3xl" />
+        <div className="absolute right-[-10%] top-[20%] h-[380px] w-[380px] rounded-full bg-violet-100/30 blur-3xl" />
+        <div className="absolute bottom-[-10%] left-[30%] h-[300px] w-[300px] rounded-full bg-cyan-100/30 blur-3xl" />
+      </div>
+
+      <main className="relative mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 py-12 md:px-8 lg:py-20">
+        {/* HERO */}
+        <section className="grid items-center gap-12 lg:grid-cols-2">
+          {/* LEFT */}
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/50 bg-white/70 px-4 py-2 shadow-[0_8px_32px_rgba(15,23,42,0.06)] backdrop-blur-2xl">
+              <Sparkles className="h-4 w-4 text-violet-600" />
+              <span className="text-sm font-semibold tracking-tight text-slate-700">
+                New for 2026 — AI margin alerts & business intelligence
+              </span>
+            </div>
+
+            <h1 className="mt-8 text-5xl font-black leading-[0.95] tracking-[-0.04em] text-slate-900 sm:text-6xl lg:text-7xl">
+              Profit clarity
+              <br />
+              for modern
+              <span className="text-blue-600"> African sellers.</span>
             </h1>
-            <p className="mt-4 max-w-xl text-lg text-slate-600">
-              Bizula is made for sellers who want a real daily profit engine—add sales in seconds, track margin changes, and unlock weekly opportunities.
+
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 sm:text-xl">
+              Bizula helps businesses track sales, monitor margins, detect
+              profit leaks and make smarter daily decisions with elegant
+              financial visibility.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            {/* CTA */}
+            <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
                 href="/signup"
-                onClick={() => pushAnalytics('signup_click', { source: 'hero' })}
-                className="rounded-xl bg-indigo-600 px-6 py-3 text-base font-semibold text-white shadow-lg transition hover:bg-indigo-500"
+                onClick={() =>
+                  pushAnalytics('signup_click', { source: 'hero' })
+                }
+                className="group inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-7 py-4 text-sm font-semibold text-white shadow-[0_15px_40px_rgba(37,99,235,0.25)] transition-all duration-300 hover:scale-[1.02] hover:bg-blue-500"
               >
-                Get Started Free
+                Start Free Trial
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </Link>
+
               <Link
                 href="/login"
-                onClick={() => pushAnalytics('login_click', { source: 'hero' })}
-                className="rounded-xl border border-slate-300 px-6 py-3 text-base font-semibold text-slate-700 hover:bg-slate-100"
+                onClick={() =>
+                  pushAnalytics('login_click', { source: 'hero' })
+                }
+                className="rounded-2xl border border-white/60 bg-white/70 px-7 py-4 text-sm font-semibold text-slate-700 shadow-[0_10px_30px_rgba(15,23,42,0.05)] backdrop-blur-2xl transition-all duration-300 hover:bg-white"
               >
                 Login
               </Link>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-3 text-sm text-slate-500">
-              <span className="rounded-lg bg-white px-3 py-2 shadow-sm">7-day trial</span>
-              <span className="rounded-lg bg-white px-3 py-2 shadow-sm">₦2,000/mo</span>
-              <span className="rounded-lg bg-white px-3 py-2 shadow-sm">No credit card required</span>
+            {/* TRUST */}
+            <div className="mt-8 flex flex-wrap gap-3">
+              {[
+                '7-day free trial',
+                'No credit card required',
+                'Built for African businesses',
+              ].map((item) => (
+                <div
+                  key={item}
+                  className="rounded-full border border-white/50 bg-white/60 px-4 py-2 text-sm font-medium text-slate-600 shadow-sm backdrop-blur-xl"
+                >
+                  {item}
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg">
-            <div className="absolute -right-28 -top-12 h-56 w-56 animate-spin-slow rounded-full bg-indigo-200/40 blur-3xl" />
-            <div className="absolute -left-28 -bottom-16 h-48 w-48 animate-pulse rounded-full bg-cyan-200/40 blur-3xl" />
+          {/* RIGHT */}
+          <div className="relative">
+            {/* FLOATING GLASS UI */}
+            <div className="relative overflow-hidden rounded-[32px] border border-white/50 bg-white/65 p-6 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur-3xl">
+              {/* reflections */}
+              <div className="absolute inset-0 bg-white/[0.08]" />
+              <div className="absolute right-0 top-0 h-64 w-64 rounded-full bg-blue-100/30 blur-3xl" />
 
-            <div className="relative h-96 p-5 text-white">
-              <div className="font-semibold">Bizula Insights</div>
-              <div className="mt-4 text-2xl font-bold">Today’s summary</div>
-              <div className="mt-2 grid grid-cols-2 gap-3 text-xs">
-                <div className="rounded-lg bg-white/20 px-3 py-2">Sales 15</div>
-                <div className="rounded-lg bg-white/20 px-3 py-2">Revenue ₦540k</div>
-                <div className="rounded-lg bg-white/20 px-3 py-2">Profit ₦132k</div>
-                <div className="rounded-lg bg-white/20 px-3 py-2">Profit Change +12%</div>
-              </div>
+              <div className="relative">
+                {/* TOP */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-slate-500">
+                      Today’s business overview
+                    </p>
 
-              <div className="mt-6 flex items-center gap-3">
-                <svg width="38" height="38" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-bounce">
-                  <circle cx="50" cy="50" r="45" fill="white" fillOpacity="0.12" />
-                  <path d="M30 60 L45 40 L60 55 L75 35" stroke="white" strokeWidth="6" strokeLinecap="round" />
-                </svg>
-                <p className="text-sm text-white">Live profit tracking updates each time you log sales.</p>
+                    <h3 className="mt-2 text-3xl font-black tracking-tight text-slate-900">
+                      ₦132,400
+                    </h3>
+
+                    <p className="mt-1 flex items-center gap-1 text-sm font-semibold text-emerald-600">
+                      <TrendingUp className="h-4 w-4" />
+                      +12.4% profit increase
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-white/60 bg-white/60 p-4 shadow-sm backdrop-blur-xl">
+                    <Wallet className="h-7 w-7 text-blue-600" />
+                  </div>
+                </div>
+
+                {/* STATS */}
+                <div className="mt-8 grid grid-cols-2 gap-4">
+                  {[
+                    {
+                      label: 'Sales',
+                      value: '15',
+                    },
+                    {
+                      label: 'Revenue',
+                      value: '₦540k',
+                    },
+                    {
+                      label: 'Ad Spend',
+                      value: '₦64k',
+                    },
+                    {
+                      label: 'Net Margin',
+                      value: '24%',
+                    },
+                  ].map((item) => (
+                    <div
+                      key={item.label}
+                      className="rounded-2xl border border-white/50 bg-white/50 p-4 backdrop-blur-2xl"
+                    >
+                      <p className="text-sm text-slate-500">{item.label}</p>
+                      <h4 className="mt-2 text-xl font-bold text-slate-900">
+                        {item.value}
+                      </h4>
+                    </div>
+                  ))}
+                </div>
+
+                {/* AI ALERT */}
+                <div className="mt-6 rounded-3xl border border-violet-100 bg-violet-50/70 p-5">
+                  <div className="flex items-start gap-4">
+                    <div className="rounded-2xl bg-white p-3 shadow-sm">
+                      <Bell className="h-5 w-5 text-violet-600" />
+                    </div>
+
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-semibold text-slate-900">
+                          AI Margin Alert
+                        </h4>
+
+                        <span className="rounded-full bg-white px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-violet-700">
+                          LIVE
+                        </span>
+                      </div>
+
+                      <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                        Your electronics category dropped 8% in profit margin
+                        this week due to increased ad spend.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* LIVE ACTIVITY */}
+                <div className="mt-6 rounded-3xl border border-white/50 bg-white/50 p-5 backdrop-blur-2xl">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-semibold text-slate-900">
+                        Live Activity
+                      </h4>
+                      <p className="mt-1 text-sm text-slate-500">
+                        Business updates in real time
+                      </p>
+                    </div>
+
+                    <div className="h-3 w-3 rounded-full bg-emerald-500 animate-pulse" />
+                  </div>
+
+                  <div className="mt-5 space-y-4">
+                    {[
+                      'New sale added — ₦48,000',
+                      'Profit target reached for today',
+                      'Inventory margin alert detected',
+                    ].map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-center gap-3"
+                      >
+                        <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                        <p className="text-sm text-slate-600">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
+        {/* VALUE SECTION */}
         <section className="grid gap-6 md:grid-cols-3">
-          {valueCards.map((item) => (
-            <article
-              key={item.title}
-              className="relative overflow-hidden rounded-2xl bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-              onMouseEnter={() => pushAnalytics('card_hover', { detail: item.title })}
+          {valueCards.map((item) => {
+            const Icon = item.icon;
+
+            return (
+              <article
+                key={item.title}
+                onMouseEnter={() =>
+                  pushAnalytics('card_hover', {
+                    detail: item.title,
+                  })
+                }
+                className="group relative overflow-hidden rounded-[28px] border border-white/50 bg-white/60 p-7 shadow-[0_15px_50px_rgba(15,23,42,0.06)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-2"
+              >
+                <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-blue-100/20 blur-3xl transition-all duration-500 group-hover:scale-150" />
+
+                <div className="relative">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/60 bg-blue-50 shadow-sm">
+                    <Icon className="h-6 w-6 text-blue-600" />
+                  </div>
+
+                  <h3 className="mt-6 text-xl font-bold tracking-tight text-slate-900">
+                    {item.title}
+                  </h3>
+
+                  <p className="mt-3 leading-relaxed text-slate-600">
+                    {item.description}
+                  </p>
+                </div>
+              </article>
+            );
+          })}
+        </section>
+
+        {/* HOW IT WORKS */}
+        <section className="rounded-[32px] border border-white/50 bg-white/60 p-8 shadow-[0_20px_60px_rgba(15,23,42,0.06)] backdrop-blur-3xl">
+          <div className="max-w-2xl">
+            <h2 className="text-4xl font-black tracking-tight text-slate-900">
+              Designed for clarity,
+              <span className="text-blue-600"> not complexity.</span>
+            </h2>
+
+            <p className="mt-4 text-lg leading-relaxed text-slate-600">
+              Bizula removes spreadsheet chaos and gives businesses a calm,
+              modern system for understanding profit performance.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {steps.map((step) => (
+              <div
+                key={step.title}
+                className="rounded-3xl border border-white/50 bg-[#fafcff] p-6"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-sm font-bold text-white">
+                  {step.title.split('.')[0]}
+                </div>
+
+                <h3 className="mt-5 text-xl font-bold text-slate-900">
+                  {step.title}
+                </h3>
+
+                <p className="mt-3 leading-relaxed text-slate-600">
+                  {step.detail}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* TESTIMONIALS */}
+        <section className="grid gap-6 lg:grid-cols-3">
+          {[
+            {
+              text:
+                'Bizula helped us identify our most profitable products within the first week.',
+              user: 'Aminat — Ecommerce Founder',
+            },
+            {
+              text:
+                'The clean dashboard and alerts changed how we monitor daily operations.',
+              user: 'Chinedu — Retail Operator',
+            },
+            {
+              text:
+                'This feels more premium than most accounting tools we tested.',
+              user: 'Samuel — Brand Owner',
+            },
+          ].map((item) => (
+            <blockquote
+              key={item.user}
+              className="rounded-[28px] border border-white/50 bg-white/60 p-7 shadow-[0_15px_50px_rgba(15,23,42,0.05)] backdrop-blur-2xl"
             >
-              <span className="absolute right-4 top-4 opacity-10" aria-hidden="true">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d={item.icon} fill="currentColor" />
-                </svg>
-              </span>
-              <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
-              <p className="mt-2 text-slate-600">{item.description}</p>
-            </article>
+              <p className="text-lg leading-relaxed text-slate-700">
+                “{item.text}”
+              </p>
+
+              <footer className="mt-6 font-semibold text-slate-900">
+                {item.user}
+              </footer>
+            </blockquote>
           ))}
         </section>
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-bold text-slate-900">Trusted by sellers across Africa</h2>
-          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {['Sahara Snooze', 'Amala Mart', 'KaboTech', 'Lagos Lounge'].map((name) => (
-              <div key={name} className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-center text-sm font-semibold text-slate-700">
-                {name}
-              </div>
-            ))}
-          </div>
-          <div className="mt-5 grid gap-4 md:grid-cols-3">
-            {[
-              { text: '“Bizula made our team 30% faster at spotting low-margin items.”', user: 'Olufunke, CEO' },
-              { text: '“The daily profit alert is a game changer for inventory decisions.”', user: 'Chinedu, Founder' },
-              { text: '“Even our finance team checks Bizula first thing every morning.”', user: 'Aminat, COO' }
-            ].map((item) => (
-              <blockquote key={item.user} className="rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-700">
-                <p>{item.text}</p>
-                <footer className="mt-2 font-semibold text-slate-900">{item.user}</footer>
-              </blockquote>
-            ))}
-          </div>
-        </section>
+        {/* CTA */}
+        <section className="relative overflow-hidden rounded-[36px] border border-white/50 bg-blue-600 px-8 py-14 text-center shadow-[0_30px_80px_rgba(37,99,235,0.25)]">
+          <div className="absolute inset-0 bg-white/[0.04]" />
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-bold text-slate-900">Frequently asked questions</h2>
-          <div className="mt-4 space-y-2">
-            {[
-              {
-                q: 'How fast can I setup?',
-                a: 'Less than 3 minutes. Input your first sale and Bizula auto-creates profit analytics.'
-              },
-              {
-                q: 'Do I need a subscription to use basic sales tracking?',
-                a: 'No. You get a free 7-day trial, then ability to continue with paid plan. Key features remain active with paid tier.'
-              },
-              {
-                q: 'Can I reset user password as admin?',
-                a: 'Yes. The admin panel supports password reset, suspend/activate, and role management.'
+          <div className="relative">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-white/15 backdrop-blur-2xl">
+              <ShieldCheck className="h-8 w-8 text-white" />
+            </div>
+
+            <h2 className="mt-6 text-4xl font-black tracking-tight text-white">
+              Make smarter profit decisions.
+            </h2>
+
+            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-blue-100">
+              Join modern African businesses using Bizula to gain financial
+              visibility and operational clarity every day.
+            </p>
+
+            <Link
+              href="/signup"
+              onClick={() =>
+                pushAnalytics('signup_click', {
+                  source: 'bottom_cta',
+                })
               }
-            ].map((item) => (
-              <details key={item.q} className="rounded-lg border border-slate-200 bg-slate-50 p-4" onClick={() => pushAnalytics('faq_interaction', { question: item.q })}>
-                <summary className="cursor-pointer font-semibold text-slate-900">{item.q}</summary>
-                <p className="mt-2 text-slate-600">{item.a}</p>
-              </details>
-            ))}
+              className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-white px-7 py-4 text-sm font-bold text-blue-700 shadow-xl transition-all duration-300 hover:scale-[1.02]"
+            >
+              Start Your Free Trial
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </div>
         </section>
+      </main>
 
-        <section className="rounded-2xl border border-slate-200 bg-gradient-to-r from-indigo-50 via-white to-teal-50 p-6 text-center shadow-sm">
-          <h2 className="text-2xl font-bold text-slate-900">Ready to make every sale count?</h2>
-          <p className="mt-2 text-slate-600">Use Bizula to build a profit-first habit and get daily decisions in your pocket.</p>
-          <Link
-            href="/signup"
-            onClick={() => pushAnalytics('signup_click', { source: 'bottom_cta' })}
-            className="mt-4 inline-flex rounded-xl bg-indigo-600 px-6 py-3 text-base font-semibold text-white shadow-lg hover:bg-indigo-500"
-          >
-            Start 7-day trial
-          </Link>
-        </section>
-      </section>
+      <footer className="border-t border-white/30 bg-white/50 py-10 backdrop-blur-2xl">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 text-sm text-slate-500 md:flex-row md:px-8">
+          <p>
+            © {new Date().getFullYear()} Bizula. Modern profit intelligence for
+            African businesses.
+          </p>
 
-      <footer className="border-t border-slate-200 bg-white py-8 text-center text-sm text-slate-500">
-        © {new Date().getFullYear()} Bizula · Built for growing merchants and sellers in Africa.
+          <div className="flex items-center gap-5">
+            <Link href="/faq" className="hover:text-slate-900">
+              FAQ
+            </Link>
+
+            <Link href="/login" className="hover:text-slate-900">
+              Login
+            </Link>
+
+            <Link href="/signup" className="hover:text-slate-900">
+              Get Started
+            </Link>
+          </div>
+        </div>
       </footer>
     </div>
   );
