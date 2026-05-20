@@ -17,7 +17,6 @@ export default function Navbar({ authenticated }: { authenticated: boolean }) {
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
         <div className="flex items-center gap-3">
           <Logo />
-          <span className="text-base font-bold text-slate-900">Bizula</span>
         </div>
 
         <nav className="hidden items-center gap-6 text-sm font-medium text-slate-700 md:flex">
